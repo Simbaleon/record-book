@@ -2,8 +2,10 @@ package com.simbaleon.spring.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.hateoas.RepresentationModel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,14 +17,20 @@ import java.util.Collection;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @NoArgsConstructor
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = "username")},
         name = "users", schema = "public")
-public class User implements UserDetails {
+public class User extends RepresentationModel<User> implements UserDetails {
+
+    public final static String ROLE_EMPLOYEE = "ROLE_EMPLOYEE",
+            ROLE_ADMIN = "ROLE_ADMIN",
+            ROLE_STUDENT = "ROLE_STUDENT",
+            ROLE_PROFESSOR = "ROLE_PROFESSOR";
 
     public enum Role implements GrantedAuthority {
-        ROLE_EMPLOYEE, ROLE_ADMIN, ROLE_STUDENT;
+        ROLE_EMPLOYEE, ROLE_ADMIN, ROLE_STUDENT, ROLE_PROFESSOR;
 
         @Override
         public String getAuthority() {
@@ -37,6 +45,7 @@ public class User implements UserDetails {
     }
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty
@@ -47,6 +56,7 @@ public class User implements UserDetails {
     @Column
     private String password;
     @Enumerated(EnumType.STRING)
+    @JsonIgnore
     @Column
     private Role role;
 
@@ -74,5 +84,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
 

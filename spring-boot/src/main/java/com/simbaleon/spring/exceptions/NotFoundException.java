@@ -10,8 +10,8 @@ public class NotFoundException extends RuntimeException {
         super(String.format("Entity %s with id %d not found", clazz.getSimpleName(), id));
     }
 
-    public NotFoundException(Class<?> clazz, String username) {
-        super(String.format("Entity %s with username %s not found", clazz.getSimpleName(), username));
+    public NotFoundException(Class<?> clazz, String name) {
+        super(String.format("Entity %s with name %s not found", clazz.getSimpleName(), name));
     }
 
     public NotFoundException(Class<?> clazz, Long id) {
