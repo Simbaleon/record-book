@@ -1,5 +1,7 @@
-package com.simbaleon.spring.records;
+package com.simbaleon.spring.models.subjects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.simbaleon.spring.models.Identifiable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -12,8 +14,9 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "subjects", schema = "public")
-public class Subject extends RepresentationModel<Subject> {
+public class Subject extends RepresentationModel<Subject> implements Identifiable<Long> {
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
@@ -21,7 +24,7 @@ public class Subject extends RepresentationModel<Subject> {
     @Column
     private int totalHours;
     @Column
-    private short course;
+    private short semester;
     @Column
     private String speciality;
 }

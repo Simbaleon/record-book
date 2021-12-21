@@ -1,6 +1,6 @@
 package com.simbaleon.spring.security;
 
-import com.simbaleon.spring.users.UserRepository;
+import com.simbaleon.spring.models.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

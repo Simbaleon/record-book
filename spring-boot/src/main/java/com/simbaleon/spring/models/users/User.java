@@ -1,10 +1,10 @@
-package com.simbaleon.spring.users;
+package com.simbaleon.spring.models.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.simbaleon.spring.models.Identifiable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,7 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = "username")},
         name = "users", schema = "public")
-public class User extends RepresentationModel<User> implements UserDetails {
+public class User extends RepresentationModel<User> implements UserDetails, Identifiable<Long> {
 
     public final static String ROLE_EMPLOYEE = "ROLE_EMPLOYEE",
             ROLE_ADMIN = "ROLE_ADMIN",

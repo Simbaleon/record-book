@@ -1,7 +1,7 @@
 package com.simbaleon.spring.security;
 
-import com.simbaleon.spring.users.UserRepository;
-import com.simbaleon.spring.users.UserService;
+import com.simbaleon.spring.models.users.UserRepository;
+import com.simbaleon.spring.models.users.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

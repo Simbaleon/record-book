@@ -1,10 +1,9 @@
-package com.simbaleon.spring.books;
+package com.simbaleon.spring.models.books;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.simbaleon.spring.models.Identifiable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.hateoas.RepresentationModel;
@@ -18,11 +17,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @Table(name = "books", schema = "public")
-public class Book extends RepresentationModel<Book> implements BookNumberGenerator.Identifiable<String> {
+public class Book extends RepresentationModel<Book> implements Identifiable<String> {
     @Id
     @GenericGenerator(
             name = "assigned-sequence",
-            strategy = "com.simbaleon.spring.books.BookNumberGenerator",
+            strategy = "com.simbaleon.spring.models.books.BookNumberGenerator",
             parameters = @org.hibernate.annotations.Parameter(name = "sequence_name", value = "hibernate_sequence")
     )
     @GeneratedValue(generator = "assigned-sequence", strategy = GenerationType.SEQUENCE)

@@ -1,5 +1,6 @@
-package com.simbaleon.spring.books;
+package com.simbaleon.spring.models.books;
 
+import com.simbaleon.spring.models.Identifiable;
 import org.hibernate.MappingException;
 import org.hibernate.Session;
 import org.hibernate.dialect.Dialect;
@@ -106,9 +107,5 @@ public class BookNumberGenerator implements IdentifierGenerator, Configurable {
         ).longValue();
 
         return sequencePrefix + String.format("%011d%s", 0 ,seqValue);
-    }
-
-    public interface Identifiable<ID extends Serializable> {
-        ID getId();
     }
 }

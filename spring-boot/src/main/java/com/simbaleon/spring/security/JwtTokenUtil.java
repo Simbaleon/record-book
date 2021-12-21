@@ -1,14 +1,12 @@
 package com.simbaleon.spring.security;
 
-import com.simbaleon.spring.users.User;
+import com.simbaleon.spring.models.users.User;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-
-import static java.lang.String.format;
 
 @Component
 @RequiredArgsConstructor

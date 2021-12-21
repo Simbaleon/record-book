@@ -16,7 +16,7 @@ public class SwaggerConfig {
     public GroupedOpenApi apiGroup() {
         return GroupedOpenApi
                 .builder()
-                .group("Api")
+                .group("API")
                 .pathsToMatch("/**")
                 .build();
     }
@@ -38,8 +38,8 @@ public class SwaggerConfig {
                 )
                 .info(
                         new Info()
-                                .title("Bookstore Rest Api")
-                                .description("Rest Api for record book application")
+                                .title("RecordBook Rest API")
+                                .description("Rest API for record book application")
                                 .version("1.0")
                 );
     }

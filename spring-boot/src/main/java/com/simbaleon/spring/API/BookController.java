@@ -1,8 +1,8 @@
 package com.simbaleon.spring.API;
 
-import com.simbaleon.spring.books.Book;
-import com.simbaleon.spring.books.BookService;
-import com.simbaleon.spring.users.User;
+import com.simbaleon.spring.models.books.Book;
+import com.simbaleon.spring.models.books.BookService;
+import com.simbaleon.spring.models.users.User;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

@@ -1,8 +1,8 @@
 package com.simbaleon.spring.API;
 
 import com.simbaleon.spring.security.JwtTokenUtil;
-import com.simbaleon.spring.users.User;
-import com.simbaleon.spring.users.UserService;
+import com.simbaleon.spring.models.users.User;
+import com.simbaleon.spring.models.users.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -12,7 +12,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
