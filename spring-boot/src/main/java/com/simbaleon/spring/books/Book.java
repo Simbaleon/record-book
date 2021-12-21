@@ -18,9 +18,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @Table(name = "books", schema = "public")
-public class Book extends RepresentationModel<Book> {
+public class Book extends RepresentationModel<Book> implements BookNumberGenerator.Identifiable<String> {
     @Id
-    @JsonIgnore
     @GenericGenerator(
             name = "assigned-sequence",
             strategy = "com.simbaleon.spring.books.BookNumberGenerator",

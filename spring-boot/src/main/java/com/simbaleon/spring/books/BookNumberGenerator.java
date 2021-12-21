@@ -12,7 +12,7 @@ import org.hibernate.id.enhanced.SequenceStyleGenerator;
 import org.hibernate.internal.util.config.ConfigurationHelper;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.type.Type;
-import org.springframework.hateoas.Identifiable;
+
 
 import java.io.Serializable;
 import java.util.Properties;
@@ -91,7 +91,7 @@ public class BookNumberGenerator implements IdentifierGenerator, Configurable {
             Object obj) {
 
         if (obj instanceof Identifiable) {
-            Identifiable identifiable = (Identifiable) obj;
+            Identifiable<String> identifiable = (Identifiable<String>) obj;
             Serializable id = identifiable.getId();
 
             if (id != null) {
@@ -106,5 +106,9 @@ public class BookNumberGenerator implements IdentifierGenerator, Configurable {
         ).longValue();
 
         return sequencePrefix + String.format("%011d%s", 0 ,seqValue);
+    }
+
+    public interface Identifiable<ID extends Serializable> {
+        ID getId();
     }
 }

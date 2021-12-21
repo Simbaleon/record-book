@@ -20,8 +20,7 @@ public class Session extends RepresentationModel<Session> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
-    @CollectionTable(name = "records", joinColumns = @JoinColumn(name = "session"))
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "session")
     private List<Record> records;
     private String bookNum;
 

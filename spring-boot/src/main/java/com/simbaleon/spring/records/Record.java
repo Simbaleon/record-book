@@ -16,15 +16,13 @@ public class Record extends RepresentationModel<Record> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    @JoinColumn
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "session_id", nullable = false)
     private Session session;
-    @Column
     @ManyToOne
     private Subject subject;
     @Column
-    @Min(value = 2, message = "The grade cannot be less than 2")
-    @Max(value = 5, message = "The grade cannot be more than 2")
+    @Enumerated(EnumType.STRING)
     private GradeType grade;
     @Column
     private String professorLastName;
