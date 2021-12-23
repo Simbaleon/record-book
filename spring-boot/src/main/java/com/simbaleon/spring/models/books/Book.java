@@ -1,6 +1,7 @@
 package com.simbaleon.spring.models.books;
 
 import com.simbaleon.spring.models.Identifiable;
+import com.simbaleon.spring.models.sessions.Session;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.hateoas.RepresentationModel;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -26,19 +28,20 @@ public class Book extends RepresentationModel<Book> implements Identifiable<Stri
     )
     @GeneratedValue(generator = "assigned-sequence", strategy = GenerationType.SEQUENCE)
     private String id;
-    @Column
     @NotEmpty
     private String fullName;
-    @Column
     @NotEmpty
     private String faculty;
-    @Column
+    @NotEmpty
+    private String groupId;
+    @NotEmpty
     private String specialty;
     @CreatedDate
     private LocalDate admissionDate;
-    @Column
     @Enumerated(EnumType.STRING)
     private StudyForm studyForm;
+    @Transient
+    private List<Session> sessionList;
 
     public enum StudyForm {
         FULL_TIME, PART_TIME, EXTRAMURAL

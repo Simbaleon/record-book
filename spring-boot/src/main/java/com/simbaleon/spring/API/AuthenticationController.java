@@ -48,9 +48,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("register")
-    public ResponseEntity<User> register(@RequestBody @Valid User user) {
+    public User register(@RequestBody @Valid User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(user));
+        System.out.println(user);
+        return userService.create(user);
     }
 
 }

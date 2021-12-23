@@ -1,16 +1,18 @@
 package com.simbaleon.spring.models;
 
 
+import com.simbaleon.spring.exceptions.NotFoundException;
+import com.simbaleon.spring.models.sessions.Session;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.FieldNameConstants;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.ValidationException;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
 
-@Setter
 @NoArgsConstructor
 public abstract class ModelService<T extends Identifiable<PK>,
         PK extends Serializable, R extends JpaRepository<T, PK>> {
@@ -18,22 +20,23 @@ public abstract class ModelService<T extends Identifiable<PK>,
     protected R repository;
     protected Class<T> clazz;
 
-    @Transactional
+    public T getById(PK id) {
+        return repository.getById(id);
+    }
+
     public T create(T model) {
-        if (!isExists(model)) {
+        if (get(model) != null) {
             repository.save(model);
         }
         throw new ValidationException("This " + clazz.getSimpleName() +
                 "(" + model.getId() + ") exists!");
     }
 
-    @Transactional
     public T update(T model) {
         T modelFromDB = getModelContainingId(model);
         return repository.save(modelFromDB);
     }
 
-    @Transactional
     public T delete(T model)
     {
         T modelFromDB = getModelContainingId(model);
@@ -41,21 +44,28 @@ public abstract class ModelService<T extends Identifiable<PK>,
         return modelFromDB;
     }
 
+    public T get(T model) {
+        return getIfExists(model);
+    }
+
     private T getModelContainingId(T model) {
-        Optional<T> modelFromDB = getModelFromDB(model);
-        if (modelFromDB.isPresent()) {
-            model.setId(modelFromDB.get().getId());
-        }
-        else throwNotFoundException(model);
+        T modelFromDB = getIfExists(model);
+        model.setId(modelFromDB.getId());
         return model;
     }
 
-    private boolean isExists(T model) {
-        Optional<T> modelFromDB = getModelFromDB(model);
-        return modelFromDB.isPresent();
+    public T getIfExists(Object... param) {
+        return getModel(param).orElseThrow(() -> new NotFoundException(clazz, param));
     }
 
-    abstract public Optional<T> getModelFromDB(T model);
+    public T getIfExists(T model) {
+        return getModel(model).orElseThrow(() -> throwNotFoundException(model));
+    }
 
-    abstract public void throwNotFoundException(T model);
+    abstract public List<T> getAllModelsFromDB(Object... param);
+
+    abstract protected Optional<T> getModel(T model);
+    abstract protected Optional<T> getModel(Object... param);
+
+    abstract public NotFoundException throwNotFoundException(T model);
 }

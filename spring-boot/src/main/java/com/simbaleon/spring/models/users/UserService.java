@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,7 +20,7 @@ public class UserService extends ModelService<User, Long, UserRepository> implem
     @Override
     public User create(User user) {
         if (userRepo.findByUsername(user.getUsername()).isPresent()) {
-            throwNotFoundException(user);
+            throw new IllegalArgumentException("User with email " + user.getUsername() + " exists!");
         }
         if (user.getRole() == null) {
             user.setRole(User.Role.ROLE_STUDENT);
@@ -28,13 +29,25 @@ public class UserService extends ModelService<User, Long, UserRepository> implem
     }
 
     @Override
-    public Optional<User> getModelFromDB(User model) {
+    public Optional<User> getModel(User model) {
         return repository.findByUsername(model.getUsername());
     }
 
     @Override
-    public void throwNotFoundException(User model) {
-        throw new NotFoundException(User.class, "username", model.getUsername());
+    public List<User> getAllModelsFromDB(Object... param) {
+        User.Role role = (User.Role) param[0];
+        return repository.findAllByRole(role);
+    }
+
+    @Override
+    public Optional<User> getModel(Object... param) {
+        String username = (String) param[0];
+        return repository.findByUsername(username);
+    }
+
+    @Override
+    public NotFoundException throwNotFoundException(User model) {
+        return new NotFoundException(User.class, "username", model.getUsername());
     }
 
     @Override

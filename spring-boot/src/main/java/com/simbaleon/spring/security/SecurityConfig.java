@@ -93,7 +93,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(format("%s/**", restApiDocPath)).permitAll()
                 .antMatchers(format("%s/**", swaggerPath)).permitAll()
                 // Our public endpoints
-                .antMatchers("/register", "/login").permitAll()
+                .antMatchers("/auth/**").permitAll()
                 // Our private endpoints
                 .anyRequest().authenticated();
 

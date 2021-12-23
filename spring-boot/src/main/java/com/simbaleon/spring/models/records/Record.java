@@ -2,7 +2,6 @@ package com.simbaleon.spring.models.records;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.simbaleon.spring.models.Identifiable;
-import com.simbaleon.spring.models.sessions.SessionResult;
 import com.simbaleon.spring.models.subjects.Subject;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
@@ -19,9 +18,7 @@ public class Record extends RepresentationModel<Record> implements Identifiable<
     @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "session_id", nullable = false)
-    private SessionResult sessionResult;
+    private String bookNum;
     @ManyToOne
     private Subject subject;
     @Column
@@ -32,6 +29,7 @@ public class Record extends RepresentationModel<Record> implements Identifiable<
 
     @Getter
     public enum GradeType {
+        BLANK(0),
         TWO(2),
         THREE(3),
         FOUR(4),

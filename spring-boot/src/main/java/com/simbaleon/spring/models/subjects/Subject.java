@@ -2,12 +2,15 @@ package com.simbaleon.spring.models.subjects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.simbaleon.spring.models.Identifiable;
+import com.simbaleon.spring.models.sessions.Session;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Objects;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -19,12 +22,22 @@ public class Subject extends RepresentationModel<Subject> implements Identifiabl
     @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
     private String disciplineName;
-    @Column
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "subjects")
+    private List<Session> session;
     private int totalHours;
-    @Column
     private short semester;
-    @Column
     private String speciality;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Subject subject = (Subject) o;
+        return getTotalHours() == subject.getTotalHours()
+                && getSemester() == subject.getSemester()
+                && Objects.equals(getDisciplineName(), subject.getDisciplineName())
+                && Objects.equals(getSpeciality(), subject.getSpeciality());
+    }
 }
