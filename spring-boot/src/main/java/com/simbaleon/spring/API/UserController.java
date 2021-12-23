@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +31,11 @@ public class UserController {
     @DeleteMapping()
     public User delete(@RequestBody @Valid User request) {
         return service.delete(request);
+    }
+
+    @GetMapping
+    public List<User> getAll(@RequestParam User.Role role) {
+        return service.getAllModelsFromDB(role);
     }
 
     @PutMapping("/role")

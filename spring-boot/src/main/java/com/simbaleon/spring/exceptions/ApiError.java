@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
@@ -18,13 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Thanks to Bruno Cleite
- */
 @Data
+@Component
 @JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.CUSTOM, property = "error", visible = true)
-@JsonTypeIdResolver(LowerCaseClassNameResolver.class)
-class ApiError {
+@JsonTypeIdResolver(ApiError.LowerCaseClassNameResolver.class)
+public class ApiError {
 
     private HttpStatus status;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
@@ -37,7 +36,7 @@ class ApiError {
         timestamp = LocalDateTime.now();
     }
 
-    ApiError(HttpStatus status) {
+    public ApiError(HttpStatus status) {
         this();
         this.status = status;
     }
@@ -116,7 +115,7 @@ class ApiError {
     }
 
     @Data
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = false)
     @AllArgsConstructor
     class ApiValidationError extends ApiSubError {
         private String object;
@@ -129,22 +128,23 @@ class ApiError {
             this.message = message;
         }
     }
+
+    class LowerCaseClassNameResolver extends TypeIdResolverBase {
+
+        @Override
+        public String idFromValue(Object value) {
+            return value.getClass().getSimpleName().toLowerCase();
+        }
+
+        @Override
+        public String idFromValueAndType(Object value, Class<?> suggestedType) {
+            return idFromValue(value);
+        }
+
+        @Override
+        public JsonTypeInfo.Id getMechanism() {
+            return JsonTypeInfo.Id.CUSTOM;
+        }
+    }
 }
 
-class LowerCaseClassNameResolver extends TypeIdResolverBase {
-
-    @Override
-    public String idFromValue(Object value) {
-        return value.getClass().getSimpleName().toLowerCase();
-    }
-
-    @Override
-    public String idFromValueAndType(Object value, Class<?> suggestedType) {
-        return idFromValue(value);
-    }
-
-    @Override
-    public JsonTypeInfo.Id getMechanism() {
-        return JsonTypeInfo.Id.CUSTOM;
-    }
-}

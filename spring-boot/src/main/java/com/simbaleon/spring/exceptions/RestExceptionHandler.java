@@ -211,7 +211,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    protected ResponseEntity<Object> handleUserAlreadyExistsException(AccessDeniedException ex,
+    protected ResponseEntity<Object> handleUserAlreadyExistsException(IllegalArgumentException ex,
                                                                       WebRequest request) {
         ApiError apiError = new ApiError(CONFLICT);
         apiError.setMessage(ex.getMessage());

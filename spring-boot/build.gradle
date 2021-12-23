@@ -32,7 +32,9 @@ dependencies {
     implementation "org.springdoc:springdoc-openapi-ui:1.5.10"
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
-    implementation("commons-lang:commons-lang:2.4")
+    implementation "commons-lang:commons-lang:2.4"
+    implementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation "com.auth0:java-jwt:3.11.0"
     implementation("org.mapstruct:mapstruct:1.4.2.Final")
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
