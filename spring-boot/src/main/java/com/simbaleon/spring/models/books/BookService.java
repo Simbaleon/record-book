@@ -11,8 +11,7 @@ import java.util.Optional;
 public class BookService extends ModelService<Book, String, BookRepository> {
 
     public BookService(BookRepository repository) {
-        this.repository = repository;
-        this.clazz = Book.class;
+        super(repository, Book.class);
     }
 
     @Override

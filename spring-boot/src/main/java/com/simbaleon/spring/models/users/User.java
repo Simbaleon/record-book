@@ -45,19 +45,17 @@ public class User extends RepresentationModel<User> implements UserDetails, Iden
     }
 
     @Id
-    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty
     @Email
-    @Column
     private String username;
     @NotEmpty
-    @Column
     private String password;
+    @NotEmpty
+    private String fullName;
     @Enumerated(EnumType.STRING)
     @JsonIgnore
-    @Column
     private Role role;
 
     @Override

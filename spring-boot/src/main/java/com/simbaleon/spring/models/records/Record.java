@@ -15,7 +15,6 @@ import javax.persistence.*;
 @Table(name = "records", schema = "public")
 public class Record extends RepresentationModel<Record> implements Identifiable<Long> {
     @Id
-    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String bookNum;
@@ -25,7 +24,7 @@ public class Record extends RepresentationModel<Record> implements Identifiable<
     @Enumerated(EnumType.STRING)
     private GradeType grade;
     @Column
-    private String professorLastName;
+    private String professorFullName;
 
     @Getter
     public enum GradeType {

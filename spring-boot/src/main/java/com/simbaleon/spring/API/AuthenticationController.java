@@ -4,6 +4,7 @@ import com.simbaleon.spring.security.JwtTokenUtil;
 import com.simbaleon.spring.models.users.User;
 import com.simbaleon.spring.models.users.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,9 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Tag(name = "Authentication")
-@RequestMapping("auth/")
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
@@ -40,7 +40,7 @@ public class AuthenticationController {
             User user = (User) authenticate.getPrincipal();
 
             return ResponseEntity.ok()
-                    .header(HttpHeaders.AUTHORIZATION, jwtTokenUtil.generateAccessToken(user))
+                    .header(HttpHeaders.AUTHORIZATION, jwtTokenUtil.generateToken(user))
                     .body(user);
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -50,7 +50,6 @@ public class AuthenticationController {
     @PostMapping("register")
     public User register(@RequestBody @Valid User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        System.out.println(user);
         return userService.create(user);
     }
 

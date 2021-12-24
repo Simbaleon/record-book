@@ -1,5 +1,6 @@
 package com.simbaleon.spring.models.books;
 
+import com.simbaleon.spring.models.professors.ProfessorSubject;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,4 +13,6 @@ import java.util.Optional;
 public interface BookRepository extends JpaRepository<Book, String> {
     Optional<Book> findByFullNameAndFaculty(@NotEmpty String fullName, @NotEmpty String faculty);
     List<Book> findAllByGroupId(@NotEmpty String groupId);
+    Optional<Book> findById(Long id);
+
 }

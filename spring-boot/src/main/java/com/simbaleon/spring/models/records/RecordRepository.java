@@ -11,4 +11,5 @@ import java.util.Optional;
 @Repository
 public interface RecordRepository extends JpaRepository<Record, Long> {
     Optional<Record> findByBookNumAndSubject(String bookNum, Subject subject);
+    Optional<Record> findById(Long id);
 }

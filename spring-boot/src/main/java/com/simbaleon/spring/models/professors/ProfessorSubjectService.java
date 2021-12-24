@@ -12,10 +12,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class ProfessorSubjectService extends ModelService<ProfessorSubject,
         Long, ProfessorSubjectRepository> {
-    private ProfessorSubjectRepository repository;
+
+
+    public ProfessorSubjectService(ProfessorSubjectRepository repository) {
+        super(repository, ProfessorSubject.class);
+    }
 
     public boolean checkProfessorSubject(User professor, Subject subject) {
         return getIfExists(professor).getSubject().equals(subject);

@@ -10,6 +10,10 @@ import java.util.Optional;
 @Service
 public class SessionService extends ModelService<Session, Long, SessionRepository> {
 
+    public SessionService(SessionRepository repository) {
+        super(repository, Session.class);
+    }
+
     @Override
     public Optional<Session> getModel(Session model) {
         return repository.findByBookNumAndSemester(model.getBookNum(), model.getSemester());

@@ -18,7 +18,6 @@ import java.util.List;
 @Table(name = "sessions", schema = "public")
 public class Session extends RepresentationModel<Session> implements Identifiable<Long> {
     @Id
-    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

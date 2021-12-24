@@ -7,6 +7,8 @@ import com.simbaleon.spring.models.subjects.Subject;
 import com.simbaleon.spring.models.users.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.assertj.core.presentation.Representation;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 
@@ -14,9 +16,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "professor_subject", schema = "public")
-public class ProfessorSubject implements Identifiable<Long> {
+public class ProfessorSubject extends RepresentationModel<ProfessorSubject> implements Identifiable<Long> {
     @Id
-    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

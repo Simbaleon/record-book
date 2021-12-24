@@ -10,6 +10,10 @@ import java.util.Optional;
 @Service
 public class SubjectService extends ModelService<Subject, Long, SubjectRepository> {
 
+    public SubjectService(SubjectRepository repository) {
+        super(repository, Subject.class);
+    }
+
     @Override
     protected Optional<Subject> getModel(Subject model) {
         return repository.findByDisciplineName(model.getDisciplineName());

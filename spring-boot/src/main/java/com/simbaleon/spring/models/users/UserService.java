@@ -12,20 +12,22 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class UserService extends ModelService<User, Long, UserRepository> implements UserDetailsService {
 
-    private final UserRepository userRepo;
+
+    public UserService(UserRepository repository) {
+        super(repository, User.class);
+    }
 
     @Override
     public User create(User user) {
-        if (userRepo.findByUsername(user.getUsername()).isPresent()) {
+        if (repository.findByUsername(user.getUsername()).isPresent()) {
             throw new IllegalArgumentException("User with email " + user.getUsername() + " exists!");
         }
         if (user.getRole() == null) {
             user.setRole(User.Role.ROLE_STUDENT);
         }
-        return userRepo.save(user);
+        return repository.save(user);
     }
 
     @Override
@@ -52,7 +54,7 @@ public class UserService extends ModelService<User, Long, UserRepository> implem
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepo.findByUsername(username).orElseThrow(()
+        return repository.findByUsername(username).orElseThrow(()
                 -> new NotFoundException(User.class, "username", username));
     }
 }

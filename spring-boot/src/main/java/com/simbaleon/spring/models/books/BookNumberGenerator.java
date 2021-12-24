@@ -13,11 +13,14 @@ import org.hibernate.id.enhanced.SequenceStyleGenerator;
 import org.hibernate.internal.util.config.ConfigurationHelper;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.type.Type;
+import org.springframework.stereotype.Component;
 
 
+import javax.persistence.GeneratedValue;
 import java.io.Serializable;
 import java.util.Properties;
 
+@Component
 public class BookNumberGenerator implements IdentifierGenerator, Configurable {
     public static final String SEQUENCE_PREFIX = "sequence_prefix";
 

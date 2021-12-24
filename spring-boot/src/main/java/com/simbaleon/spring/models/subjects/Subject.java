@@ -9,23 +9,27 @@ import lombok.NoArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.Objects;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Entity
 @Table(name = "subjects", schema = "public")
 public class Subject extends RepresentationModel<Subject> implements Identifiable<Long> {
     @Id
-    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty
     private String disciplineName;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "subjects")
     private List<Session> session;
     private int totalHours;
+    @Min(value = 1, message = "Semester starts from 1!")
+    @Max(value = 10, message = "Semester cannot be more than 10!")
     private short semester;
     private String speciality;
 
